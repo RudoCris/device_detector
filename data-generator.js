@@ -137,6 +137,11 @@ function generateDeviceFFTPlot(device, dataSize, fftSize, outputTo)
     FS.writeFileSync(outputTo + '/' + device.name + 'FFT.data', fftData.join("\n"));
 }
 
+function generateDeviceSample (device,dataSize, fftSize, outputTo) {
+    var fftData = generateDeviceFFT(device, dataSize, fftSize);
+    FS.writeFileSync(outputTo, fftData.join("\n"));   
+}
+
 function generateTrainingData(devices, samples, dataSize, fftSize, reportFn) {
     var i, ilen, j,
         device,
@@ -159,22 +164,34 @@ devices = generateDevices(TOTAL_DEVICES, function(device) {
     console.log(device.name, 'generated');
 });
 
-trainingData = generateTrainingData(devices, TRAINING_SAMPLE_SIZE, DATA_SIZE, OUTPUT_SIZE, function(device, i, sample) {
-    console.log('Training sample #', i, 'for device', device.name, 'generated');
-});
+// trainingData = generateTrainingData(devices, TRAINING_SAMPLE_SIZE, DATA_SIZE, OUTPUT_SIZE, function(device, i, sample) {
+//     console.log('Training sample #', i, 'for device', device.name, 'generated');
+// });
 
-// Training SVM
-console.log("Training");
+// // Training SVM
+// console.log("Training");
 
-clf = new SVM.CSVC();
-clf.train(trainingData).done(function() {
-    console.log("Checking train results");
-    devices.map(function(device) {
-        var prediction = clf.predictSync(generateDeviceFFT(device, DATA_SIZE, OUTPUT_SIZE));
-        console.log("Prediction:", prediction, " - Actual:", device.index, " which corresponds to ", device.name);
-    });
-});
+// clf = new SVM.CSVC();
+// clf.train(trainingData).done(function() {
+//     console.log("Checking train results");
+//     devices.map(function(device) {
+//         var prediction = clf.predictSync(generateDeviceFFT(device, DATA_SIZE, OUTPUT_SIZE));
+//         console.log("Prediction:", prediction, " - Actual:", device.index, " which corresponds to ", device.name);
+//     });
+// });
 
 //generateDeviceFFTPlot(devices[0], DATA_SIZE, OUTPUT_SIZE, 'output');
 //generateDeviceFFTPlot(devices[1], DATA_SIZE, OUTPUT_SIZE, 'output');
 //generateDeviceFFTPlot(devices[2], DATA_SIZE, OUTPUT_SIZE, 'output');
+
+module.exports = {
+    writeSample1: function () {
+        generateDeviceSample(devices[0], DATA_SIZE, OUTPUT_SIZE, 'tmp/sample.data')
+    },
+    writeSample2: function () {
+        generateDeviceSample(devices[1], DATA_SIZE, OUTPUT_SIZE, 'tmp/sample.data')
+    },
+    writeSample3: function () {
+        generateDeviceSample(devices[2], DATA_SIZE, OUTPUT_SIZE, 'tmp/sample.data')
+    }
+}

@@ -1,7 +1,10 @@
 var FFT = require('fft'),
     SVM = require('node-svm'),
     FS  = require('fs'),
-    SEEDRANDOM = require('seedrandom');
+    PATH = require('path'),
+    MKDIRP = require('mkdirp'),
+    SEEDRANDOM = require('seedrandom'),
+    UUID = require('node-uuid');
 
 var SEED = 'HackatonRozetka',
     MAX_DEVICE_COMPLEXITY = 15,
@@ -137,9 +140,15 @@ function generateDeviceFFTPlot(device, dataSize, fftSize, outputTo)
     FS.writeFileSync(outputTo + '/' + device.name + 'FFT.data', fftData.join("\n"));
 }
 
-function generateDeviceSample (device,dataSize, fftSize, outputTo) {
-    var fftData = generateDeviceFFT(device, dataSize, fftSize);
-    FS.writeFileSync(outputTo, fftData.join("\n"));   
+function generateDeviceSample (device, dataSize, fftSize, outputTo) {
+    var fftData = generateDeviceFFT(device, dataSize, fftSize),
+        dirPath = PATH.dirname(outputTo);
+
+    if (!FS.exists(dirPath)) {
+        MKDIRP.sync(dirPath, 0777);
+    }
+
+    FS.writeFileSync(outputTo, fftData.join("\n"));
 }
 
 function generateTrainingData(devices, samples, dataSize, fftSize, reportFn) {
@@ -185,13 +194,16 @@ devices = generateDevices(TOTAL_DEVICES, function(device) {
 //generateDeviceFFTPlot(devices[2], DATA_SIZE, OUTPUT_SIZE, 'output');
 
 module.exports = {
-    writeSample1: function () {
-        generateDeviceSample(devices[0], DATA_SIZE, OUTPUT_SIZE, 'tmp/sample.data')
+    writeSample1: function (deviceName, path) {
+        path = path || 'devices/' + deviceName + '/' + UUID.v4();
+        generateDeviceSample(devices[0], DATA_SIZE, OUTPUT_SIZE, path);
     },
-    writeSample2: function () {
-        generateDeviceSample(devices[1], DATA_SIZE, OUTPUT_SIZE, 'tmp/sample.data')
+    writeSample2: function (deviceName, path) {
+        path = path || 'devices/' + deviceName + '/' + UUID.v4();
+        generateDeviceSample(devices[1], DATA_SIZE, OUTPUT_SIZE, path);
     },
-    writeSample3: function () {
-        generateDeviceSample(devices[2], DATA_SIZE, OUTPUT_SIZE, 'tmp/sample.data')
-    }
-}
+    writeSample3: function (deviceName, path) {
+        path = path || 'devices/' + deviceName + '/' + UUID.v4();
+        generateDeviceSample(devices[2], DATA_SIZE, OUTPUT_SIZE, path);
+    },
+};

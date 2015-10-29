@@ -18,7 +18,9 @@
   "homepage": "https://github.com/RudoCris/device_detector#readme",
   "dependencies": {
     "fft": "^0.2.1",
+    "mkdirp": "^0.5.1",
     "node-svm": "^2.1.6",
+    "node-uuid": "^1.4.3",
     "seedrandom": "^2.4.2"
   }
 }

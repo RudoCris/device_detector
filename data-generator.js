@@ -18,7 +18,7 @@ var SEED = 'HackatonRozetka',
     MAX_DEVICE_FREQ_SPREAD = 1.05,
     MIN_DEVICE_FREQ_SPREAD = 0.95,
     TOTAL_DEVICES = 15,
-    DATA_SIZE = 1024,
+    DATA_SIZE = 256,
     OUTPUT_SIZE = 128,
     TRAINING_SAMPLE_SIZE = 10; // Multiplied by TOTAL_DEVICES
 
@@ -70,8 +70,7 @@ function fft(input, outputSize) {
 }
 
 // Generates device function, which returns function recieving 1 parameter phase
-function generateDeviceFn()
-{
+function generateDeviceFn(){
     var i,
         complexity = rnd(MIN_DEVICE_COMPLEXITY, MAX_DEVICE_COMPLEXITY),
         device = [];
@@ -151,6 +150,17 @@ function generateDeviceSample (device, dataSize, fftSize, outputTo) {
     FS.writeFileSync(outputTo, fftData.join("\n"));
 }
 
+function writeSample (data, outputTo) {
+    // var samplePath = outputTo + '/' + device.name + '/' + UUID.v4(),
+        var dirPath = PATH.dirname(outputTo);
+
+    if (!FS.exists(dirPath)) {
+        MKDIRP.sync(dirPath, 0777);
+    }
+
+    FS.writeFileSync(outputTo, data.join("\n")); 
+}
+
 function generateTrainingData(devices, samples, dataSize, fftSize, reportFn) {
     var i, ilen, j,
         device,
@@ -206,4 +216,9 @@ module.exports = {
         path = path || 'devices/' + deviceName + '/' + UUID.v4();
         generateDeviceSample(devices[2], DATA_SIZE, OUTPUT_SIZE, path);
     },
+    writeSample: function (deviceName, data, path) {
+        path = path || 'devices/' + deviceName + '/' + UUID.v4();
+        
+        writeSample(data, path)
+    }
 };

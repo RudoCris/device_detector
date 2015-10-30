@@ -100,4 +100,4 @@ module.exports = {
     getDeviceProfile : getDeviceProfile
 };
 
-train();
+// train();

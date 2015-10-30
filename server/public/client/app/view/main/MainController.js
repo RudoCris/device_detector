@@ -151,10 +151,15 @@ Ext.define('DDC.view.main.MainController', {
                         record = deviceStore.getById(json.device),
                         item;
 
-                    deviceList.getSelectionModel().select(record);
-                    Ext.get(deviceList.getView().getRow(record)).highlight('EAB60B', {
-                        duration : 500
-                    });
+                    if (record) {
+                        deviceList.getSelectionModel().select(record);
+                        Ext.get(deviceList.getView().getRow(record)).highlight('EAB60B', {
+                            duration : 500
+                        });
+                    }
+                    else {
+                        deviceList.getSelectionModel().deselectAll();
+                    }
                 },
                 callback : function() {
                     me.detectTimerId && (me.detectTimerId = Ext.Function.defer(pollForDetection, 1000));

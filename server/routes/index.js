@@ -15,15 +15,9 @@ router.get('/', function(req, res, next) {
 
     switch(socket){
         case "1":
-<<<<<<< HEAD
         	var data = getDataByUart();
         	generator.writeSample(device, data);
-
             res.json({status : 1});
-=======
-            generator.writeSample1(device);
-            res.json({success : true});
->>>>>>> b113c914ecbab20e5ba9e82cd5ef0cf3049b9178
             break;
         case "2":
             generator.writeSample2(device);

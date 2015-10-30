@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 var generator = require('../../data-generator.js');
 var dt = require('../lib/td.js');
-
+var mraa = require('mraa');
+var getDataByUart = require('../../uart.js');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: "Express" });
 })
 
 .get('/sample/:socket/:device',function (req, res) {
@@ -14,7 +15,9 @@ router.get('/', function(req, res, next) {
 
     switch(socket){
         case "1":
-            generator.writeSample1(device);
+        	var data = getDataByUart();
+        	generator.writeSample(device, data);
+
             res.json({status : 1});
             break;
         case "2":

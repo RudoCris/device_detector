@@ -15,25 +15,25 @@ router.get('/', function(req, res, next) {
     switch(socket){
         case "1":
             generator.writeSample1(device);
-            res.json({status : 1});
+            res.json({success : true});
             break;
         case "2":
             generator.writeSample2(device);
-            res.json({status : 1});
+            res.json({success : true});
             break;
         case "3":
             generator.writeSample3(device);
-            res.json({status : 1});
+            res.json({success : true});
             break;
         default:
             res.status = 404;
-            res.send("No socket");
+            res.json({success : false, message : "No device found"});
     }
 })
 
 .get('/train', function(req, res) {
     dt.train(function() {
-        res.json("{status : 1}");
+        res.json({success : true});
     });
 })
 
@@ -41,7 +41,26 @@ router.get('/', function(req, res, next) {
     var device = req.params['device'],
         prediction = dt.predict(device);
 
-    res.send({ status : 1, device : prediction });
+    res.json({ success : true, device : prediction });
+})
+
+.get('/listdevices', function(req, res) {
+    res.json({
+        success : true,
+        devices : dt.listDevices().map(function(deviceName) { return { id : deviceName, name : deviceName, icon : null }; })
+    });
+})
+
+.get('/adddevice/:device', function(req, res) {
+    var deviceName = req.params['device'];
+    dt.addDevice(deviceName);
+    res.json({success : true});
+})
+
+.get('/removedevice/:device', function(req, res) {
+    var deviceName = req.params['device'];
+    dt.removeDevice(deviceName);
+    res.json({success : true});
 });
 
 module.exports = router;

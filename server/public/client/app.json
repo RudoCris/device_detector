@@ -46,7 +46,7 @@
      * The toolkit to use. Select either "classic" or "modern".
      */
     
-    "toolkit": "modern",
+    "toolkit": "classic",
     
     
     /**
@@ -511,26 +511,6 @@
 
 
     /**
-     * Additional resources used during theme slicing operations
-     */
-    "slicer": {
-        "js": [
-            {
-                "path": "sass/example/custom.js",
-                "isWidgetManifest": true
-            }
-        ],
-        "output": {
-            "appCache": {
-                "enable": false
-            }
-        },
-        "cache": {
-            "enable": false
-        }
-    },
-
-    /**
      * The space config object is used by the "sencha app publish" command to publish
      * a version of this application to Sencha Web Application Manager:
      *
@@ -578,5 +558,5 @@
      * Uniquely generated id for this application, used as prefix for localStorage keys.
      * Normally you should never change this value.
      */
-    "id": "f9041d32-b276-40ed-89b1-93c9b5205479"
+    "id": "82eb9045-5f28-429b-a295-1008c5b1561a"
 }

@@ -6,56 +6,45 @@
  * TODO - Replace this content of this view to suite the needs of your application.
  */
 Ext.define('DDC.view.main.Main', {
-    extend: 'Ext.tab.Panel',
+    extend: 'Ext.Panel',
     xtype: 'app-main',
 
     requires: [
-        'Ext.MessageBox',
-
         'DDC.view.main.MainController',
         'DDC.view.main.MainModel',
-        'DDC.view.main.List'
+        'DDC.view.main.DeviceList'
     ],
 
     controller: 'main',
     viewModel: 'main',
+    layout : 'fit',
 
-    defaults: {
-        tab: {
-            iconAlign: 'top'
-        },
-        styleHtmlContent: true
-    },
+    title : "Умная розетка (SkyNet 0.0.1 alpha)",
 
-    tabBarPosition: 'bottom',
+    items: [{
+        reference : 'devicelist',
+        xtype     : 'devicelist'
+    }],
 
-    items: [
-        {
-            title: 'Home',
-            iconCls: 'x-fa fa-home',
-            layout: 'fit',
-            // The following grid shares a store with the classic version's grid as well!
-            items: [{
-                xtype: 'mainlist'
-            }]
-        },{
-            title: 'Users',
-            iconCls: 'x-fa fa-user',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Groups',
-            iconCls: 'x-fa fa-users',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Settings',
-            iconCls: 'x-fa fa-cog',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        }
-    ]
+    dockedItems : [{
+        xtype : 'toolbar',
+        dock  : 'bottom',
+        items : [{
+            xtype     : 'button',
+            reference : 'detect',
+            text      : 'Определить устройство',
+            cls       : 'detect-device-button',
+            enableToggle : true
+        }, '->', {
+            xtype     : 'button',
+            reference : 'train',
+            text      : 'Тренировать сеть',
+            cls       : 'train-network'
+        }, '->', {
+            xtype     : 'button',
+            reference : 'adddevice',
+            text      : 'Добавить устройство',
+            cls       : 'add-device-button'
+        }]
+    }]
 });

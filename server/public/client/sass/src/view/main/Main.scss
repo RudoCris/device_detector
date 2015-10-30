@@ -1,0 +1,16 @@
+.add-device-button {
+}
+
+.detect-device-button {
+    background-color: #35C535;
+}
+
+.detect-device-button.x-btn-over,
+.detect-device-button.x-btn-focus {
+    background-color: #0E460E !important;
+}
+
+.detect-device-button .x-btn-inner {
+    font-weight: bold;
+    color : white;
+}

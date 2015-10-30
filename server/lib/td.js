@@ -56,7 +56,33 @@ function predict(deviceIndex)
     return devices[prediction] || 'Unknown device';
 }
 
+function listDevices()
+{
+    return FS.readdirSync(SAMPLES_ROOT).sort();
+}
+
+function addDevice(deviceName) {
+    var path = SAMPLES_ROOT + '/' + deviceName;
+
+    if (!FS.exists(path)) {
+        FS.mkdirSync(path);
+    }
+}
+
+function removeDevice(deviceName) {
+    var path = SAMPLES_ROOT + '/' + deviceName;
+
+    if (FS.exists(path)) {
+        FS.rmdirSync(path);
+    }
+}
+
 module.exports = {
-    train : train,
-    predict : predict
+    train        : train,
+    predict      : predict,
+    listDevices  : listDevices,
+    addDevice    : addDevice,
+    removeDevice : removeDevice
 };
+
+train();

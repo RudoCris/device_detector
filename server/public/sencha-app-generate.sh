@@ -1,1 +1,1 @@
-sencha generate app -ext -modern DDC ./client
+sencha generate app -ext -classic DDC ./client

@@ -12,18 +12,29 @@ Ext.define('DDC.view.main.Main', {
     requires: [
         'DDC.view.main.MainController',
         'DDC.view.main.MainModel',
-        'DDC.view.main.DeviceList'
+        'DDC.view.main.DeviceList',
+        'DDC.view.main.DeviceProfile'
     ],
 
     controller: 'main',
     viewModel: 'main',
-    layout : 'fit',
+    layout : {
+        type : 'hbox',
+        align : 'stretch'
+    },
 
     title : "Умная розетка (SkyNet 0.0.1 alpha)",
 
     items: [{
         reference : 'devicelist',
-        xtype     : 'devicelist'
+        xtype     : 'devicelist',
+        flex      : 1
+    }, {
+        xtype     : 'splitter'
+    }, {
+        reference : 'deviceprofile',
+        xtype     : 'deviceprofile',
+        flex      : 1,
     }],
 
     dockedItems : [{

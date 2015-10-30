@@ -64,7 +64,7 @@ function listDevices()
 function addDevice(deviceName) {
     var path = SAMPLES_ROOT + '/' + deviceName;
 
-    if (!FS.exists(path)) {
+    if (!FS.existsSync(path)) {
         FS.mkdirSync(path);
     }
 }
@@ -72,17 +72,32 @@ function addDevice(deviceName) {
 function removeDevice(deviceName) {
     var path = SAMPLES_ROOT + '/' + deviceName;
 
-    if (FS.exists(path)) {
+    if (FS.existsSync(path)) {
         FS.rmdirSync(path);
     }
 }
 
+function getDeviceProfile(deviceName) {
+    var path = SAMPLES_ROOT + '/' + deviceName,
+        profiles = FS.readdirSync(path),
+        profile,
+        result = [];
+
+    if (profiles.length) {
+        profile = Math.floor(Math.random() * profiles.length);
+        result = FS.readFileSync(path + '/' + profiles[profile], 'utf8').split("\n");
+    }
+
+    return result;
+}
+
 module.exports = {
-    train        : train,
-    predict      : predict,
-    listDevices  : listDevices,
-    addDevice    : addDevice,
-    removeDevice : removeDevice
+    train            : train,
+    predict          : predict,
+    listDevices      : listDevices,
+    addDevice        : addDevice,
+    removeDevice     : removeDevice,
+    getDeviceProfile : getDeviceProfile
 };
 
 train();

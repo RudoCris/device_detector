@@ -16,7 +16,8 @@ Ext.define('DDC.view.main.MainController', {
     control : {
         'devicelist' : {
             'measure-device' : 'onMeasureDevice',
-            'remove-device'  : 'onRemoveDevice'
+            'remove-device'  : 'onRemoveDevice',
+            'select'         : 'onDeviceListSelect'
         },
         'button[reference=adddevice]' : {
             'click' : 'onAddDevice'
@@ -200,5 +201,26 @@ Ext.define('DDC.view.main.MainController', {
                 });
             }
         });
+    },
+
+    onDeviceListSelect : function(grid, record, index) {
+        var me = this,
+            deviceProfile = me.lookupReference('deviceprofile'),
+            profileStore = deviceProfile.getStore();
+
+        // Do not do it like that, use store.load() instead
+        Ext.Ajax.request({
+            url : '/deviceprofile/' + record.get('name'),
+            success : function(response) {
+                response = Ext.decode(response.responseText);
+                profileStore.loadRawData(response.profile);
+            }
+        });
+
+        /*
+        profileStore.load({
+            url : '/deviceprofile/' + record.get('name')
+        });
+        */
     }
 });

@@ -61,6 +61,20 @@ router.get('/', function(req, res, next) {
     var deviceName = req.params['device'];
     dt.removeDevice(deviceName);
     res.json({success : true});
+})
+
+.get('/deviceprofile/:device', function(req, res) {
+    var deviceName = req.params['device'],
+        profile = dt.getDeviceProfile(deviceName);
+
+    profile = profile.map(function(value, idx) {
+        return {
+            id   : idx,
+            value : value
+        };
+    });
+
+    res.json({ success : true, profile : profile });
 });
 
 module.exports = router;

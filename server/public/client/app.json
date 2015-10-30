@@ -67,7 +67,8 @@
      *      ]
      */
     "requires": [
-        "font-awesome"
+        "font-awesome",
+        "charts"
     ],
 
     /**

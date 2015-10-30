@@ -3,7 +3,7 @@ Ext.define('DDC.store.Devices', {
 
     alias: 'store.devices',
 
-    fields: 'DDC.model.Device',
+    model: 'DDC.model.Device',
 
     sorters : {
         property : 'name',

@@ -1,6 +1,3 @@
-/**
- * This view is an example list of people.
- */
 Ext.define('DDC.view.main.DeviceList', {
     extend: 'Ext.grid.Panel',
     xtype: 'devicelist',

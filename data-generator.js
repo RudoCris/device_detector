@@ -144,7 +144,7 @@ function generateDeviceSample (device, dataSize, fftSize, outputTo) {
     var fftData = generateDeviceFFT(device, dataSize, fftSize),
         dirPath = PATH.dirname(outputTo);
 
-    if (!FS.exists(dirPath)) {
+    if (!FS.existsSync(dirPath)) {
         MKDIRP.sync(dirPath, 0777);
     }
 

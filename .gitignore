@@ -2,4 +2,7 @@ node_modules
 output
 server/devices
 server/tmp
+server/public/client/ext
+server/public/client/build
+server/public/client/.sencha
 *.log

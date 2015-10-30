@@ -11,7 +11,7 @@ function getSample() {
 	while(data = U.readStr(16)){
 		if(data >= 0.1){
 			for (var i = 0; i < 256; i++) {
-				sample.push(parseFloat(data));
+				sample.push(parseFloat(U.readStr(16)));
 			}
 		}
 		return sample;

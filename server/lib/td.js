@@ -85,4 +85,4 @@ module.exports = {
     removeDevice : removeDevice
 };
 
-train();
+// train();
